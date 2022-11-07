@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import "../styles/app.css";
 import axios from "axios";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 import BeerList from "./BeerList";
 
 const App = () => {
   const [beers, setBeers] = useState([]);
-  const [useDarkTheme, setUseDarkTheme] = useState(true);
+  const { useDarkTheme, setUseDarkTheme } = useContext(ThemeContext);
 
   const handleToggle = () => {
     setUseDarkTheme((prev) => !prev);
