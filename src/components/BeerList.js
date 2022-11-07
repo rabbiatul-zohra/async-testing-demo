@@ -3,12 +3,13 @@ import "../styles/beerlist.css";
 
 import Beer from "./Beer";
 
-const BeerList = () => {
+const BeerList = ({ beers }) => {
   return (
     <div className="beerlist">
-      Beerlist: Wrapper component to display list of beers
-      <Beer />
-      <Beer />
+      Beerlist: Number of beers to display: {beers.length}
+      {beers.map((beer) => {
+        return <Beer beer={beer} />;
+      })}
     </div>
   );
 };
