@@ -7,12 +7,26 @@ import BeerList from "./BeerList";
 const App = () => {
   const [beers, setBeers] = useState([]);
 
+  const handleClick = (e) => {
+    let query = "https://api.punkapi.com/v2/beers/";
+    if (e.target.value !== "all") {
+      query += e.target.value;
+    }
+
+    axios
+      .get(query)
+      .then((res) => {
+        setBeers(res.data);
+      })
+      .catch((err) => console.log("Server error: " + err));
+  };
+
   useEffect(() => {
     axios
-      .get("https://api.punkapi.com/v2/beers/random")
+      .get("https://api.punkapi.com/v2/beers")
       .then((res) => {
-        console.log(res.data)
-        setBeers(res.data)
+        console.log(res.data);
+        setBeers(res.data);
       })
       .catch((err) => console.log("Server error: " + err));
   }, []);
@@ -20,7 +34,13 @@ const App = () => {
   return (
     <div className="app">
       App: {beers[0]?.name}
-      {beers && <BeerList beers={beers} /> }
+      <button value="all" onClick={handleClick}>
+        Get ALL beers
+      </button>
+      <button value="random" onClick={handleClick}>
+        Get a random beer
+      </button>
+      {beers && <BeerList beers={beers} />}
     </div>
   );
 };
