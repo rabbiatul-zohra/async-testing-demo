@@ -1,53 +1,38 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/app.css";
 import axios from "axios";
-import { ThemeContext } from "../contexts/ThemeContext";
 
-import BeerList from "./BeerList";
+import Beer from "./Beer";
 
 const App = () => {
-  const [beers, setBeers] = useState([]);
-  const { useDarkTheme, setUseDarkTheme } = useContext(ThemeContext);
-
-  const handleToggle = () => {
-    setUseDarkTheme((prev) => !prev);
-  };
+  const [beer, setBeer] = useState([]);
 
   const handleClick = (e) => {
-    let query = "https://api.punkapi.com/v2/beers/";
-    if (e.target.value !== "all") {
-      query += e.target.value;
-    }
-
     axios
-      .get(query)
+      .get("https://api.punkapi.com/v2/beers/random")
       .then((res) => {
-        setBeers(res.data);
+        setBeer(res.data[0]);
       })
       .catch((err) => console.log("Server error: " + err));
   };
 
   useEffect(() => {
     axios
-      .get("https://api.punkapi.com/v2/beers")
+      .get("https://api.punkapi.com/v2/beers/random")
       .then((res) => {
-        console.log(res.data);
-        setBeers(res.data);
+        setBeer(res.data[0]);
       })
       .catch((err) => console.log("Server error: " + err));
   }, []);
 
   return (
-    <div className={`app ${useDarkTheme ? "app--dark" : "app--light"}`}>
-      App: {beers[0]?.name}
-      <button value="all" onClick={handleClick}>
-        Get ALL beers
-      </button>
+    <div className="app">
+      <h1>Random beer generator</h1>
+      <div className="app__title">{beer?.name}</div>
       <button value="random" onClick={handleClick}>
         Get a random beer
       </button>
-      <button onClick={handleToggle}>Switch theme</button>
-      {beers && <BeerList beers={beers} />}
+      {beer && <Beer beer={beer} />}
     </div>
   );
 };
