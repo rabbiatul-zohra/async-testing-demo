@@ -8,15 +8,23 @@ const App = () => {
   const [beer, setBeer] = useState([]);
 
   const handleClick = async (e) => {
-    const result = await getBeer();
-    setBeer(result);
+    try {
+      const result = await getBeer();
+      setBeer(result);
+    } catch (err) {
+      console.log("Server error: " + err);
+    }
   };
 
   useEffect(() => {
     const getBeerData = async () => {
-      const result = await getBeer();
-      setBeer(result);
-    }
+      try {
+        const result = await getBeer();
+        setBeer(result);
+      } catch (err) {
+        console.log("Server error: " + err.message);
+      }
+    };
     getBeerData();
   }, []);
 
