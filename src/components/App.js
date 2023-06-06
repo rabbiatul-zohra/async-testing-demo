@@ -7,7 +7,7 @@ import Beer from "./Beer";
 const App = () => {
   const [beer, setBeer] = useState([]);
 
-  const handleClick = async (e) => {
+  const handleClick = async () => {
     try {
       const result = await getBeer();
       setBeer(result);
