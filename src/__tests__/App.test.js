@@ -10,6 +10,7 @@ describe("App", () => {
   test("renders app title", () => {
     render(<App />);
     const titleElement = screen.getByText(/Random beer generator/i);
+
     expect(titleElement).toBeInTheDocument();
   });
 

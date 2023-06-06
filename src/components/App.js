@@ -1,28 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "../styles/app.css";
-import axios from "axios";
+import fetchBeer from "../requests/fetchBeer";
 
 import Beer from "./Beer";
 
 const App = () => {
   const [beer, setBeer] = useState([]);
 
-  const handleClick = (e) => {
-    axios
-      .get("https://api.punkapi.com/v2/beers/random")
-      .then((res) => {
-        setBeer(res.data[0]);
-      })
-      .catch((err) => console.log("Server error: " + err));
+  const handleClick = () => {
+    fetchBeer(setBeer);
   };
 
   useEffect(() => {
-    axios
-      .get("https://api.punkapi.com/v2/beers/random")
-      .then((res) => {
-        setBeer(res.data[0]);
-      })
-      .catch((err) => console.log("Server error: " + err));
+    fetchBeer(setBeer);
   }, []);
 
   return (
