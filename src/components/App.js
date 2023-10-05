@@ -20,16 +20,17 @@ const App = () => {
     axios
       .get("https://api.punkapi.com/v2/beers/random")
       .then((res) => {
+        console.log(res);
         setBeer(res.data[0]);
       })
       .catch((err) => console.log("Server error: " + err));
   }, []);
 
   return (
-    <div className="app">
+    <div className='app'>
       <h1>Random beer generator</h1>
-      <div className="app__title">{beer?.name}</div>
-      <button value="random" onClick={handleClick}>
+      <div className='app__title'>{beer?.name}</div>
+      <button value='random' onClick={handleClick}>
         Get a random beer
       </button>
       {beer && <Beer beer={beer} />}
